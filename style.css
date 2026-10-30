@@ -318,7 +318,12 @@ a:hover { text-decoration-thickness: 2px; }
   .card.card-full { flex-direction: row; }
   .card-full .cover { width: 50%; aspect-ratio: auto; min-height: 320px; border-bottom: 0; border-right: 1px solid var(--border); }
   .card-full .card-body { justify-content: center; padding: var(--s-7); }
+  .card.card-flip { flex-direction: row-reverse; }
+  .card-flip .cover { border-right: 0; border-left: 1px solid var(--border); }
 }
+/* Обложка-скриншот: держим верхний левый угол, где заголовок сайта */
+.cover-shot { display: block; height: auto; object-position: left top; }
+.card-full .card-body .tags { margin-top: var(--s-2); }
 .card-kicker { font-size: var(--fs-small); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--primary); }
 .card-full h3 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
 .cover-radar {
