@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Паша — fullstack-разработчик: боты, сайты, автоматизация</title>
+<meta name="description" content="Паша — fullstack-разработчик. Делаю Telegram-ботов, сайты, лендинги и автоматизацию под ключ.">
+<meta name="theme-color" content="#0b0c10">
+<meta property="og:title" content="Паша — fullstack-разработчик">
+<meta property="og:description" content="Боты, сайты, лендинги и автоматизация под ключ.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0c10; --bg2:#10121a; --card:#14161f; --line:#232636;
+  --text:#e9ebf2; --muted:#9aa1b5;
+  --accent:#7c5cff; --accent2:#22d3ee; --ok:#34d399; --warn:#fbbf24;
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(600px 400px at 85% -5%,rgba(124,92,255,.22),transparent 60%),
+    radial-gradient(500px 400px at -5% 30%,rgba(34,211,238,.12),transparent 60%);
+}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+section{padding:88px 0}
+h1,h2,h3{line-height:1.15;letter-spacing:-.02em}
+h2{font-size:clamp(28px,4vw,40px);font-weight:800;margin-bottom:12px}
+.lead{color:var(--muted);max-width:620px;font-size:17px;margin-bottom:40px}
+.grad{background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* nav */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,12,16,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{font-weight:800;font-size:19px;display:flex;align-items:center;gap:10px}
+.logo i{
+  width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-style:normal;font-size:15px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
+}
+.links{display:flex;gap:26px;font-size:15px;color:var(--muted)}
+.links a:hover{color:var(--text)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;border:1px solid transparent;
+  transition:transform .15s,box-shadow .2s,background .2s;font-family:inherit;
+}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(120deg,var(--accent),#5b8cff);color:#fff;box-shadow:0 8px 28px rgba(124,92,255,.35)}
+.btn.primary:hover{box-shadow:0 10px 36px rgba(124,92,255,.55);transform:translateY(-1px)}
+.btn.ghost{border-color:var(--line);background:rgba(255,255,255,.02);color:var(--text)}
+.btn.ghost:hover{border-color:var(--accent);background:rgba(124,92,255,.08)}
+.btn.sm{padding:9px 16px;font-size:14px}
+
+/* hero */
+.hero{padding-top:72px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:99px;
+  border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:13px;color:var(--muted);margin-bottom:22px;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(52,211,153,.7);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.hero h1{font-size:clamp(36px,6vw,62px);font-weight:800;margin-bottom:20px}
+.hero p.sub{font-size:18px;color:var(--muted);max-width:540px;margin-bottom:30px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}
+.stats{display:flex;gap:36px;flex-wrap:wrap}
+.stat b{display:block;font-size:30px;font-weight:800}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* chat */
+.chat{
+  background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+.chat-top{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--bg2)}
+.ava{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.chat-top small{display:block;color:var(--ok);font-size:12px;line-height:1.2}
+.chat-top strong{font-size:15px;line-height:1.2}
+.back{
+  margin-left:auto;font-family:inherit;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;
+  padding:7px 12px;border-radius:10px;background:rgba(124,92,255,.14);border:1px solid rgba(124,92,255,.4);transition:.2s;
+}
+.back:hover{background:rgba(124,92,255,.3)}
+.back[hidden]{display:none}
+.opts button.ghost{background:transparent;border-color:var(--line);color:var(--muted)}
+.opts button.ghost:hover{border-color:var(--accent);color:var(--text)}
+.msgs{padding:18px;height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin}
+.msg{max-width:84%;padding:10px 14px;border-radius:16px;font-size:14.5px;line-height:1.45;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.msg.bot{background:#1c1f2c;border-bottom-left-radius:4px;align-self:flex-start}
+.msg.me{background:linear-gradient(120deg,var(--accent),#5b8cff);border-bottom-right-radius:4px;align-self:flex-end}
+.typing{display:flex;gap:4px;padding:14px}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:bl 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,60%,100%{opacity:.3}30%{opacity:1}}
+.opts{display:flex;flex-direction:column;gap:8px;padding:0 18px 18px}
+.opts button{
+  font-family:inherit;font-size:14px;color:var(--text);padding:10px 14px;border-radius:12px;cursor:pointer;
+  background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.35);transition:.2s;text-align:center;
+}
+.opts button:hover{background:rgba(124,92,255,.25)}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:16px 0}
+.track{display:flex;width:max-content;animation:scroll 28s linear infinite}
+.track span{padding:0 26px;font-weight:600;color:var(--muted);white-space:nowrap}
+.track span::after{content:"✦";margin-left:52px;color:var(--accent)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* cards */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.card:hover{transform:translateY(-4px);border-color:rgba(124,92,255,.55);box-shadow:0 18px 50px rgba(124,92,255,.12)}
+.ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;margin-bottom:18px;background:rgba(124,92,255,.14)}
+.card h3{font-size:20px;margin-bottom:10px}
+.card p{color:var(--muted);font-size:15px;margin-bottom:14px}
+.card ul{list-style:none;display:grid;gap:8px;font-size:14.5px}
+.card li{padding-left:22px;position:relative;color:#cdd1df}
+.card li::before{content:"→";position:absolute;left:0;color:var(--accent2)}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.tag{font-size:12px;padding:4px 10px;border-radius:99px;background:rgba(34,211,238,.1);color:var(--accent2);border:1px solid rgba(34,211,238,.25)}
+
+/* works */
+.work{min-height:210px;display:flex;flex-direction:column;justify-content:space-between;border-style:dashed}
+.work .tag{align-self:flex-start;background:rgba(251,191,36,.1);color:var(--warn);border-color:rgba(251,191,36,.3)}
+.work.live{border-style:solid;border-color:rgba(124,92,255,.5);background:linear-gradient(160deg,rgba(124,92,255,.12),var(--card) 60%)}
+.work.live .tag{background:rgba(34,211,238,.1);color:var(--accent2);border-color:rgba(34,211,238,.25)}
+.live-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.live-row .open{font-weight:600;font-size:14.5px;color:var(--accent2)}
+
+/* crm */
+.crm{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px}
+.crm-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.crm-stats div{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.crm-stats small{color:var(--muted);font-size:13px}
+.crm-stats b{display:block;font-size:26px}
+.deals{display:grid;gap:10px;margin-bottom:18px;min-height:60px}
+.deal{
+  display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);
+  animation:pop .25s ease;flex-wrap:wrap;
+}
+.deal .n{flex:1;min-width:120px;font-weight:600;word-break:break-word}
+.deal .s{color:var(--muted);font-size:14px}
+.stage{font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px}
+.st0{background:rgba(124,92,255,.15);color:#a994ff}
+.st1{background:rgba(251,191,36,.14);color:var(--warn)}
+.st2{background:rgba(52,211,153,.14);color:var(--ok)}
+.deal button{
+  width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--text);
+  cursor:pointer;font-size:15px;transition:.2s;font-family:inherit;
+}
+.deal button:hover:not(:disabled){border-color:var(--accent);background:rgba(124,92,255,.15)}
+.deal button:disabled{opacity:.3;cursor:default}
+.crm form{display:flex;gap:10px;flex-wrap:wrap}
+.crm input{
+  flex:1;min-width:140px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);
+  background:var(--bg2);color:var(--text);font-family:inherit;font-size:15px;outline:none;
+}
+.crm input:focus{border-color:var(--accent)}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:s}
+.step{counter-increment:s;position:relative;padding-top:54px}
+.step::before{
+  content:counter(s);position:absolute;top:0;left:0;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+  font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));
+}
+.step h3{font-size:18px;margin-bottom:6px}
+.step p{color:var(--muted);font-size:14.5px}
+
+/* faq */
+.faq{display:grid;gap:12px;max-width:820px}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;transition:border-color .2s}
+details[open]{border-color:rgba(124,92,255,.5)}
+summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--accent2);font-size:22px;line-height:1;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:12px;color:var(--muted)}
+
+/* contact */
+.contact{
+  text-align:center;border-radius:28px;padding:64px 24px;border:1px solid var(--line);
+  background:radial-gradient(500px 260px at 50% 0,rgba(124,92,255,.28),transparent 70%),var(--card);
+}
+.contact p{color:var(--muted);max-width:480px;margin:0 auto 28px}
+footer{padding:30px 0 40px;text-align:center;color:var(--muted);font-size:14px}
+footer a{color:var(--accent2)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .grid3,.grid4{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .links{display:none}
+  section{padding:64px 0}
+}
+@media (max-width:520px){
+  .steps{grid-template-columns:1fr}
+  .crm-stats{grid-template-columns:1fr}
+  .stats{gap:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body id="top">
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo"><i>П</i>Паша</a>
+    <nav class="links">
+      <a href="#services">Услуги</a>
+      <a href="#works">Работы</a>
+      <a href="#crm">CRM</a>
+      <a href="#process">Как работаю</a>
+      <a href="#contact">Связаться</a>
+    </nav>
+    <a class="btn primary sm" href="https://t.me/thezhmrk" target="_blank" rel="noopener">Написать</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="rv">
+      <div class="badge"><span class="dot"></span>Беру новые проекты</div>
+      <h1>Делаю <span class="grad">ботов, сайты</span> и автоматизацию</h1>
+      <p class="sub">Я Паша, fullstack-разработчик. Беру задачу целиком: придумываю, пишу, запускаю и довожу до результата, который работает без вашего участия.</p>
+      <div class="cta">
+        <a class="btn primary" href="#contact">Обсудить проект</a>
+        <a class="btn ghost" href="#services">Что я умею</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>24/7</b><span>боты всегда на связи</span></div>
+        <div class="stat"><b>4</b><span>направления работы</span></div>
+        <div class="stat"><b>1</b><span>человек отвечает за всё</span></div>
+      </div>
+    </div>
+
+    <div class="chat rv" aria-label="Демо бота-визитки">
+      <div class="chat-top">
+        <div class="ava">П</div>
+        <div><strong>Паша</strong><small>бот-визитка · онлайн</small></div>
+        <button class="back" id="back" type="button" hidden>← Назад</button>
+      </div>
+      <div class="msgs" id="msgs" aria-live="polite"></div>
+      <div class="opts" id="opts"></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Telegram-боты</span><span>Сайты</span><span>Лендинги</span><span>Автоматизация</span><span>Монтаж видео</span><span>Интеграции</span><span>Fullstack</span>
+    <span>Telegram-боты</span><span>Сайты</span><span>Лендинги</span><span>Автоматизация</span><span>Монтаж видео</span><span>Интеграции</span><span>Fullstack</span>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <h2 class="rv">Что я делаю</h2>
+    <p class="lead rv">Четыре направления. В каждом можно взять готовое решение или собрать под вашу идею.</p>
+    <div class="grid4">
+      <article class="card rv">
+        <div class="ico">🤖</div>
+        <h3>Боты</h3>
+        <p>Автоматизирую то, что обычно делают руками: заявки, уведомления, сбор данных, магазины внутри Telegram.</p>
+        <ul>
+          <li>Запись на услуги и занятия</li>
+          <li>Приём оплат и личный кабинет</li>
+          <li>Мониторинг и новостные боты</li>
+          <li>Админ-панель без кода</li>
+        </ul>
+        <div class="tags"><span class="tag">Telegram Bot API</span><span class="tag">Python</span></div>
+      </article>
+      <article class="card rv">
+        <div class="ico">🌐</div>
+        <h3>Сайты и лендинги</h3>
+        <p>Страницы, которые быстро грузятся, отлично выглядят на телефоне и приводят людей к действию.</p>
+        <ul>
+          <li>Лендинги под рекламу</li>
+          <li>Сайты-визитки и портфолио</li>
+          <li>Фронтенд и бэкенд в одних руках</li>
+          <li>Панели учёта заказов</li>
+        </ul>
+        <div class="tags"><span class="tag">HTML/CSS/JS</span><span class="tag">React</span><span class="tag">Node.js</span></div>
+      </article>
+      <article class="card rv">
+        <div class="ico">⚙️</div>
+        <h3>Автоматизация</h3>
+        <p>Убираю рутину: связываю сервисы между собой, чтобы данные и задачи ходили сами.</p>
+        <ul>
+          <li>Парсеры и сбор данных</li>
+          <li>Интеграции с API и CRM</li>
+          <li>Рассылки и отчёты</li>
+          <li>Запуск на сервере и поддержка</li>
+        </ul>
+        <div class="tags"><span class="tag">API</span><span class="tag">Docker</span><span class="tag">Linux</span></div>
+      </article>
+      <article class="card rv">
+        <div class="ico">🎬</div>
+        <h3>Монтаж видео</h3>
+        <p>Ролики для соцсетей и рекламы. Собираю в цельную историю, а не просто склеиваю кадры.</p>
+        <ul>
+          <li>Динамичный монтаж для Reels, Shorts и TikTok</li>
+          <li>Озвучка и субтитры</li>
+          <li>Работа со звуком и цветом</li>
+          <li>Нарезка длинных видео на короткие</li>
+        </ul>
+        <div class="tags"><span class="tag">Reels / Shorts</span><span class="tag">Субтитры</span><span class="tag">Звук</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="works" style="background:var(--bg2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <h2 class="rv">Работы</h2>
+    <p class="lead rv">Мой первый бот уже работает, можно открыть и попробовать. Остальные кейсы скоро появятся здесь.</p>
+    <div class="grid3">
+      <a class="card work live rv" href="https://t.me/RiskHelperRadar_Bot" target="_blank" rel="noopener">
+        <div><h3>RiskHelperRadar</h3><p>Мой Telegram-бот. Откройте его и попробуйте сами.</p></div>
+        <div class="live-row"><span class="tag">Telegram-бот</span><span class="open">Открыть бота →</span></div>
+      </a>
+      <div class="card work rv"><div><h3>Лендинг с заявками в Telegram</h3><p>Быстрая страница, форма и мгновенное уведомление о заявке.</p></div><span class="tag">Скоро</span></div>
+      <div class="card work rv"><div><h3>Парсер с отчётом в чат</h3><p>Собирает данные по расписанию и присылает готовую сводку.</p></div><span class="tag">Скоро</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="crm">
+  <div class="wrap">
+    <h2 class="rv">CRM-демо</h2>
+    <p class="lead rv">Пример CRM, которую можно собрать под ваши заказы: клиенты, этапы и суммы в одном месте. Попробуйте: двигайте сделки стрелками и добавляйте свои. Данные тестовые.</p>
+    <div class="crm rv">
+      <div class="crm-stats">
+        <div><small>Сделок</small><b id="c-all">0</b></div>
+        <div><small>В работе</small><b id="c-work">0</b></div>
+        <div><small>Завершено</small><b id="c-done">0</b></div>
+      </div>
+      <div class="deals" id="deals"></div>
+      <form id="dealForm">
+        <input id="dName" placeholder="Клиент или задача" maxlength="40" required aria-label="Клиент или задача">
+        <input id="dSum" type="number" min="0" placeholder="Сумма, ₽" aria-label="Сумма">
+        <button class="btn primary" type="submit">Добавить</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="process" style="background:var(--bg2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <h2 class="rv">Как мы работаем</h2>
+    <p class="lead rv">Простой процесс без сюрпризов по цене и срокам.</p>
+    <div class="steps">
+      <div class="step rv"><h3>Обсуждаем задачу</h3><p>Вы рассказываете идею, я задаю уточняющие вопросы.</p></div>
+      <div class="step rv"><h3>Согласуем цену и срок</h3><p>Называю стоимость и дату заранее.</p></div>
+      <div class="step rv"><h3>Делаю и показываю</h3><p>Присылаю промежуточный результат, чтобы вы могли влиять на него.</p></div>
+      <div class="step rv"><h3>Сдаю и поддерживаю</h3><p>Запускаю, объясняю, как пользоваться, и остаюсь на связи.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2 class="rv">Частые вопросы</h2>
+    <div class="faq" style="margin-top:28px">
+      <details class="rv"><summary>С чего начать?</summary><p>Напишите мне в Telegram и опишите идею своими словами. Остальное уточню сам и предложу решение.</p></details>
+      <details class="rv"><summary>Можно доработать то, что уже есть?</summary><p>Да. Могу взять готового бота или сайт, добавить функции, исправить ошибки или перенести на другой хостинг.</p></details>
+      <details class="rv"><summary>Нужен ли свой сервер для бота?</summary><p>Бот должен работать постоянно, поэтому ему нужен сервер. Помогу выбрать, настроить и запустить.</p></details>
+      <details class="rv"><summary>Сколько это стоит и как быстро?</summary><p>Зависит от задачи. После короткого обсуждения называю точную цену и срок, и они не меняются по ходу работы.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding-top:20px">
+  <div class="wrap">
+    <div class="contact rv">
+      <h2>Расскажите, что нужно сделать</h2>
+      <p>Напишите пару строк о задаче, и я отвечу с идеями, сроком и стоимостью.</p>
+      <a class="btn primary" href="https://t.me/thezhmrk" target="_blank" rel="noopener">Написать в Telegram</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year">2026</span> Паша. Боты, сайты, автоматизация. Telegram: <a href="https://t.me/thezhmrk" target="_blank" rel="noopener">@thezhmrk</a></div>
+</footer>
+
+<script>
+/* год в подвале */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* появление блоков при прокрутке */
+(function(){
+  var els = document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  },{threshold:.12});
+  els.forEach(function(e){ io.observe(e); });
+})();
+
+/* демо-бот */
+(function(){
+  var msgs = document.getElementById('msgs');
+  var opts = document.getElementById('opts');
+  var tree = {
+    start: {
+      text: ['Привет! Я Паша, fullstack-разработчик.', 'Делаю Telegram-ботов, сайты и автоматизацию, а ещё монтирую видео. Что вас интересует?'],
+      options: [['Бот для бизнеса','bot'],['Сайт или лендинг','site'],['Автоматизация','auto'],['Монтаж видео','video']]
+    },
+    menu: {
+      text: ['Хорошо, выберите другое направление:'],
+      options: [['Бот для бизнеса','bot'],['Сайт или лендинг','site'],['Автоматизация','auto'],['Монтаж видео','video']]
+    },
+    bot: {
+      text: ['Боты принимают заявки, оплаты, отвечают клиентам и шлют уведомления. Работают круглосуточно.', 'Хотите обсудить свою идею?'],
+      options: [['Да, написать Паше','contact'],['← Назад','menu']]
+    },
+    site: {
+      text: ['Делаю быстрые лендинги и сайты, которые удобно открывать с телефона. Сразу подключаю заявки в Telegram.', 'Обсудим ваш проект?'],
+      options: [['Да, написать Паше','contact'],['← Назад','menu']]
+    },
+    auto: {
+      text: ['Парсеры, интеграции с сервисами, отчёты и рассылки. Всё, что сейчас делается руками, можно отдать скрипту.', 'Расскажете, что хотите автоматизировать?'],
+      options: [['Да, написать Паше','contact'],['← Назад','menu']]
+    },
+    video: {
+      text: ['Монтирую ролики для соцсетей и рекламы: ритм, звук, субтитры и озвучка.', 'Есть исходники и идея?'],
+      options: [['Да, написать Паше','contact'],['← Назад','menu']]
+    },
+    contact: { text:['Отлично! Открываю Telegram…'], options:[] }
+  };
+  function add(text, who){
+    var d = document.createElement('div');
+    d.className = 'msg ' + who; d.textContent = text;
+    msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; return d;
+  }
+  function typing(){
+    var d = document.createElement('div');
+    d.className = 'msg bot typing'; d.innerHTML = '<span></span><span></span><span></span>';
+    msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; return d;
+  }
+  var run = 0, backBtn = document.getElementById('back');
+  function play(key){
+    var node = tree[key]; opts.innerHTML = '';
+    var my = ++run, i = 0;
+    backBtn.hidden = (key === 'start' || key === 'menu');
+    (function next(){
+      if(my !== run) return;
+      if(i >= node.text.length){
+        node.options.forEach(function(o){
+          var b = document.createElement('button'); b.textContent = o[0];
+          if(o[1] === 'menu') b.className = 'ghost';
+          b.onclick = function(){ add(o[0],'me'); play(o[1]); };
+          opts.appendChild(b);
+        });
+        if(key === 'contact'){ setTimeout(function(){ window.open('https://t.me/thezhmrk','_blank','noopener'); },500); }
+        return;
+      }
+      var t = typing();
+      setTimeout(function(){ t.remove(); if(my !== run) return; add(node.text[i],'bot'); i++; next(); }, 500);
+    })();
+  }
+  backBtn.onclick = function(){ add('← Назад','me'); play('menu'); };
+  play('start');
+})();
+
+/* CRM-демо */
+(function(){
+  var stages = ['Новая','В работе','Готово'];
+  var deals = [
+    {n:'Бот для салона красоты', s:25000, st:1},
+    {n:'Лендинг для кофейни', s:15000, st:0},
+    {n:'Парсер цен', s:8000, st:2}
+  ];
+  var box = document.getElementById('deals');
+  function money(v){ return v ? Number(v).toLocaleString('ru-RU') + ' ₽' : ''; }
+  function render(){
+    box.innerHTML = '';
+    deals.forEach(function(d, i){
+      var row = document.createElement('div'); row.className = 'deal';
+      var n = document.createElement('span'); n.className = 'n'; n.textContent = d.n;
+      var s = document.createElement('span'); s.className = 's'; s.textContent = money(d.s);
+      var st = document.createElement('span'); st.className = 'stage st' + d.st; st.textContent = stages[d.st];
+      var l = document.createElement('button'); l.textContent = '←'; l.disabled = d.st === 0; l.setAttribute('aria-label','Назад');
+      var r = document.createElement('button'); r.textContent = '→'; r.disabled = d.st === 2; r.setAttribute('aria-label','Вперёд');
+      var x = document.createElement('button'); x.textContent = '✕'; x.setAttribute('aria-label','Удалить');
+      l.onclick = function(){ d.st--; render(); };
+      r.onclick = function(){ d.st++; render(); };
+      x.onclick = function(){ deals.splice(i,1); render(); };
+      [n,s,st,l,r,x].forEach(function(e){ row.appendChild(e); });
+      box.appendChild(row);
+    });
+    document.getElementById('c-all').textContent = deals.length;
+    document.getElementById('c-work').textContent = deals.filter(function(d){return d.st===1}).length;
+    document.getElementById('c-done').textContent = deals.filter(function(d){return d.st===2}).length;
+  }
+  document.getElementById('dealForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var n = document.getElementById('dName'), s = document.getElementById('dSum');
+    if(!n.value.trim()) return;
+    deals.unshift({n:n.value.trim(), s:Number(s.value)||0, st:0});
+    n.value = ''; s.value = ''; render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
