@@ -346,6 +346,25 @@ a:hover { text-decoration-thickness: 2px; }
   background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
+/* Обложка Дедлайн-напарника — макет чата с планом */
+.cover-chat {
+  display: grid; place-items: center; padding: var(--s-4); container-type: inline-size;
+  background-image: radial-gradient(color-mix(in srgb, var(--primary) 30%, transparent) 1px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+.chat { display: grid; gap: var(--s-2); width: min(100%, 380px); font-size: clamp(11px, 3.4cqi, 14px); line-height: 1.35; }
+.bubble { padding: .6em .85em; border-radius: var(--r-md); }
+.bubble-me { justify-self: end; max-width: 80%; background: var(--primary); color: var(--on-primary); border-bottom-right-radius: var(--r-sm); }
+.bubble-bot { justify-self: start; width: 92%; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: var(--r-sm); }
+.chat-title { font-weight: 600; margin-bottom: .35em; }
+.chat-steps { display: grid; gap: .15em; list-style: none; padding: 0; }
+.chat-steps li { display: flex; gap: .6em; align-items: baseline; }
+.chat-steps span { flex: none; width: 1.7em; color: var(--muted); }
+.chat-steps .is-done { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--primary); }
+.chat-actions { display: flex; gap: .4em; margin-top: .6em; }
+.chat-btn { flex: 1; padding: .3em .5em; text-align: center; font-weight: 500; border: 1px solid var(--border); border-radius: var(--r-sm); color: var(--text); }
+.chat-btn-main { background: color-mix(in srgb, var(--primary) 12%, var(--surface)); border-color: color-mix(in srgb, var(--primary) 40%, var(--border)); color: var(--primary); }
+
 /* Карточки: подъём, увеличение обложки и пятно света за курсором */
 .card { transition: box-shadow .3s, border-color .3s, transform .3s cubic-bezier(.2,.7,.2,1); }
 .card::before {
